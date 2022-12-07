@@ -48,11 +48,29 @@ const roic = {
         var slides = this.getStatRow(stat).getElementsByClassName("min-w-[50px] w-full grow text-center text-xs 2xl:text-sm h-full flex items-center pr-0.5 justify-end");
         for(var i = 0; i < slides.length; i++)
         {
-            result.push(slides[i].textContent);
+            var value = slides[i].textContent;
+            var normalizedValue = this.normalizeNumber(value);
+            result.push(normalizedValue);
         }
 
         return result;
     },
+
+    normalizeNumber: function(num) {
+        var temp = num.trim();
+        var result = 1;
+
+        if(temp.includes('%')) {
+            result *= 0.01;
+        }
+
+        if(temp.includes('(') && temp.includes(')')) {
+            result *= -1;
+        }
+
+        result *= temp.replace('(', '').replace(')', '').replace('%', '');
+        return result;
+    }
 };
 
 (function() {
@@ -60,4 +78,11 @@ const roic = {
 
     // Your code here...
     console.log(roic.getStatArray(STAT.Revenue_Per_Share));
+    console.log(roic.getStatArray(STAT.Dividends_Per_Share));
+    console.log(roic.getStatArray(STAT.Plowback_ratio));
 })();
+
+
+
+
+
