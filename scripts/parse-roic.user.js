@@ -60,6 +60,10 @@ const roic = {
         var temp = num.trim();
         var result = 1;
 
+        if(temp.includes('- -')) { ////////// THIS WON'T ALSWAYS BE APPLICABLE. -- means missing not really 0
+           return 0;
+        }
+
         if(temp.includes('%')) {
             result *= 0.01;
         }
